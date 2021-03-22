@@ -43,9 +43,9 @@ from torchvision import transforms
 import torchvision as tv
 from torchvision.models import inception_v3
 import skimage.transform
-from peterpy import peter
 from ballpark import ballpark
 
+from . import peterpy
 from .data import csv_collator
 from .data import ScaleImageAndLabel
 from .data import build_dataset
@@ -101,7 +101,7 @@ criterion_training = losses.WeightedHausdorffDistance(resized_height=args.height
                                                       device=device)
 
 # Restore saved checkpoint (model weights)
-with peter("Loading checkpoint"):
+with peterpy.peter("Loading checkpoint"):
 
     if os.path.isfile(args.model):
         if args.cuda:
@@ -347,7 +347,7 @@ os.makedirs(os.path.join(args.out, 'intermediate', 'metrics_plots'),
 
 if args.evaluate:
 
-    with peter("Evauating metrics"):
+    with peterpy.peter("Evauating metrics"):
 
         # Output CSV where we will put
         # all our metrics as a function of r and the threshold
