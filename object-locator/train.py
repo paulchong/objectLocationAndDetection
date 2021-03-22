@@ -38,10 +38,10 @@ from torch.utils.data import DataLoader
 import matplotlib
 matplotlib.use('Agg')
 import skimage.transform
-from peterpy import peter
 from ballpark import ballpark
 
 from . import losses
+from . import peterpy
 from .models import unet_model
 from .metrics import Judge
 from . import logger
@@ -93,7 +93,7 @@ trainset_loader, valset_loader = \
                                max_valset_size=args.max_valset_size)
 
 # Model
-with peter('Building network'):
+with peterpy.peter('Building network'):
     model = unet_model.UNet(3, 1,
                             height=args.height,
                             width=args.width,
@@ -128,7 +128,7 @@ lowest_mahd = np.infty
 
 # Restore saved checkpoint (model weights + epoch + optimizer state)
 if args.resume:
-    with peter('Loading checkpoint'):
+    with peterpy.peter('Loading checkpoint'):
         if os.path.isfile(args.resume):
             checkpoint = torch.load(args.resume)
             start_epoch = checkpoint['epoch']
