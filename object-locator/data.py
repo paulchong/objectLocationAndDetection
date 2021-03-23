@@ -279,8 +279,10 @@ class CSVDataset(torch.utils.data.Dataset):
         """
 
         if self.there_is_gt:
-            img_abspath = os.path.join(self.root_dir, self.csv_df.iloc[idx].filename)
-            dictionary = dict(self.csv_df.iloc[idx])
+            # img_abspath = os.path.join(self.root_dir, self.csv_df.iloc[idx].filename)
+            # dictionary = dict(self.csv_df.iloc[idx])
+            img_abspath = os.path.join(self.root_dir, self.csv_df.loc[idx].filename)
+            dictionary = dict(self.csv_df.loc[idx])
         else:
             img_abspath = os.path.join(self.root_dir, self.listfiles[idx])
             dictionary = {'filename': self.listfiles[idx]}
