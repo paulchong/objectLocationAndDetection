@@ -70,7 +70,7 @@ def parse_command_args(training_or_testing):
                                    metavar='N',
                                    help="Number of epochs to train.")
         optional_args.add_argument('--nThreads', '-j',
-                                   default=4,
+                                   default=2,
                                    type=strictly_positive_int,
                                    metavar='N',
                                    help="Number of threads to create "
