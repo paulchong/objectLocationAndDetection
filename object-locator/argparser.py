@@ -327,7 +327,7 @@ def parse_command_args(training_or_testing):
                                    metavar='N',
                                    help='Only use the first N images of the testing dataset.')
         optional_args.add_argument('--nThreads', '-j',
-                                   default=4,
+                                   default=2,
                                    type=int,
                                    metavar='N',
                                    help='Number of data loading threads.')
