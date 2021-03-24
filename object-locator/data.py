@@ -292,7 +292,10 @@ class CSVDataset(torch.utils.data.Dataset):
         if self.there_is_gt:
             # str -> lists
             dictionary['locations'] = eval(dictionary['locations'])
-            dictionary['locations'] = ast.literal_eval(dictionary['locations'])
+            # dictionary['locations'] = ast.literal_eval(dictionary['locations'])
+
+            dictionary['locations'] = [
+                list(loc) for loc in dictionary['locations']]
 
             # list --> Tensors
             with torch.no_grad():
