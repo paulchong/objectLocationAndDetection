@@ -142,7 +142,7 @@ def get_train_val_loaders(train_dir,
                                    seed=seed)
 
             # Split 80% for training, 20% for validation
-            n_imgs_for_training = int(round(0.8*len(trainset)))
+            n_imgs_for_training = int(round(0.9*len(trainset)))
             if isinstance(trainset, CSVDataset):
                 if trainset.there_is_gt:
                     trainset.csv_df = \
