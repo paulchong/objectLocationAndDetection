@@ -85,24 +85,27 @@ class Judge():
         :param pts: List of estmated points.
         :param gt: List of ground truth points.
         :param max_ahd: Maximum AHD possible to return if any set is empty. Default: inf.
+        GT coordinates were inverted for the true-positive calculation. Unsure how these were inverted to begin with.
+        but the need for a reversal was validated offline.
         """
+        gt_inverted_xy = [[element[1],element[0]] for element in gt]
 
         if len(pts) == 0:
             tp = 0
             fp = 0
-            fn = len(gt)
+            fn = len(gt_inverted_xy)
         else:
-            nbr = sklearn.neighbors.NearestNeighbors(n_neighbors=1, metric='euclidean').fit(gt)
+            nbr = sklearn.neighbors.NearestNeighbors(n_neighbors=1, metric='euclidean').fit(gt_inverted_xy)
             dis, idx = nbr.kneighbors(pts)
             detected_pts = (dis[:, 0] <= self.r).astype(np.uint8)
 
             nbr = sklearn.neighbors.NearestNeighbors(n_neighbors=1, metric='euclidean').fit(pts)
-            dis, idx = nbr.kneighbors(gt)
+            dis, idx = nbr.kneighbors(gt_inverted_xy)
             detected_gt = (dis[:, 0] <= self.r).astype(np.uint8)
 
             tp = np.sum(detected_pts)
             fp = len(pts) - tp
-            fn = len(gt) - np.sum(detected_gt)
+            fn = len(gt_inverted_xy) - np.sum(detected_gt)
 
         self.tp += tp
         self.fp += fp
