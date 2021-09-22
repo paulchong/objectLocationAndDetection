@@ -51,6 +51,7 @@ class Normalizer():
         """
 
         orig_img_size = np.array(orig_img_size)
+
         assert orig_img_size.ndim == 1
         assert len(orig_img_size) == 2
 

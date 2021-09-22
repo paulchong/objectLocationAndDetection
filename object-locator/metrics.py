@@ -90,6 +90,9 @@ class Judge():
         """
         gt_inverted_xy = [[element[1],element[0]] for element in gt]
 
+        pts = sorted(pts, key=lambda x: x[0], reverse=False)
+        gt_inverted_xy = sorted(gt_inverted_xy, key=lambda x: x[0], reverse=False)
+
         if len(pts) == 0:
             tp = 0
             fp = 0
@@ -108,11 +111,15 @@ class Judge():
             fn = len(gt_inverted_xy) - np.sum(detected_gt)
 
         self.tp += tp
-        print("tp = " + tp + "r = " + r)
+        # print("gt = ", gt_inverted_xy, "\n")
+        # print("pts = ", pts, "\n")
+        # print("tp = ", self.tp, ", r = ", self.r)
+        # print("detected_pts: ", detected_pts)
+        # print(dis)
         self.fp += fp
-        print("fp = " + fp + "r = " + r)
+        # print("fp = ", self.fp, "r = ", self.r)
         self.fn += fn
-        print("fn = " + fn + "r = " + r)
+        # print("fn = ", self.fn, "r = ", self.r)
 
         # Evaluation using the Averaged Hausdorff Distance
         ahd = losses.averaged_hausdorff_distance(pts, gt_inverted_xy,
