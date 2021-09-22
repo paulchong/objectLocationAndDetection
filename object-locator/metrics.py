@@ -108,11 +108,11 @@ class Judge():
             fn = len(gt_inverted_xy) - np.sum(detected_gt)
 
         self.tp += tp
-        print(tp)
+        print("tp = " + tp + "r = " + r)
         self.fp += fp
-        print(fp)
+        print("fp = " + fp + "r = " + r)
         self.fn += fn
-        print(fn)
+        print("fn = " + fn + "r = " + r)
 
         # Evaluation using the Averaged Hausdorff Distance
         ahd = losses.averaged_hausdorff_distance(pts, gt_inverted_xy,
