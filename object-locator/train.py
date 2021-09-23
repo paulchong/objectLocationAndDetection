@@ -454,14 +454,24 @@ while epoch < args.epochs:
     if judge.mahd < lowest_mahd:
         # Keep the best model
         lowest_mahd = judge.mahd
-        if args.save:
-            torch.save({'epoch': epoch + 1,  # when resuming, we will start at the next epoch
-                        'model': model.state_dict(),
-                        'mahd': lowest_mahd,
-                        'optimizer': optimizer.state_dict(),
-                        'n_points': args.n_points,
-                        }, args.save)
-            print("Saved best checkpoint so far in %s " % args.save)
+        # if args.save:
+        #     torch.save({'epoch': epoch + 1,  # when resuming, we will start at the next epoch
+        #                 'model': model.state_dict(),
+        #                 'mahd': lowest_mahd,
+        #                 'optimizer': optimizer.state_dict(),
+        #                 'n_points': args.n_points,
+        #                 }, args.save)
+        #     print("Saved best checkpoint so far in %s " % args.save)
+    # removed condition that checkpoint save only happens when mahd is lower
+    if args.save:
+        torch.save({'epoch': epoch + 1,  # when resuming, we will start at the next epoch
+                    'model': model.state_dict(),
+                    'mahd': lowest_mahd,
+                    'optimizer': optimizer.state_dict(),
+                    'n_points': args.n_points,
+                    }, args.save)
+        print("Saved best checkpoint so far in %s " % args.save)
+
 
     epoch += 1
 
