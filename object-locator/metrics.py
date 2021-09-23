@@ -122,7 +122,7 @@ class Judge():
         # print("fn = ", self.fn, "r = ", self.r)
 
         # Evaluation using the Averaged Hausdorff Distance
-        ahd = losses.averaged_hausdorff_distance(pts, gt_inverted_xy,
+        ahd = losses.averaged_hausdorff_distance(pts, gt,
                                                  max_ahd=max_ahd)
         self._sum_ahd += ahd
         self._n_calls_to_feed_points += 1
