@@ -88,38 +88,26 @@ class Judge():
         GT coordinates were inverted for the true-positive calculation. Unsure how these were inverted to begin with.
         but the need for a reversal was validated offline.
         """
-        gt_inverted_xy = [[element[1],element[0]] for element in gt]
-
-        pts = sorted(pts, key=lambda x: x[0], reverse=False)
-        gt_inverted_xy = sorted(gt_inverted_xy, key=lambda x: x[0], reverse=False)
-
         if len(pts) == 0:
             tp = 0
             fp = 0
-            fn = len(gt_inverted_xy)
+            fn = len(gt)
         else:
-            nbr = sklearn.neighbors.NearestNeighbors(n_neighbors=1, metric='euclidean').fit(gt_inverted_xy)
+            nbr = sklearn.neighbors.NearestNeighbors(n_neighbors=1, metric='euclidean').fit(gt)
             dis, idx = nbr.kneighbors(pts)
             detected_pts = (dis[:, 0] <= self.r).astype(np.uint8)
 
             nbr = sklearn.neighbors.NearestNeighbors(n_neighbors=1, metric='euclidean').fit(pts)
-            dis, idx = nbr.kneighbors(gt_inverted_xy)
+            dis, idx = nbr.kneighbors(gt)
             detected_gt = (dis[:, 0] <= self.r).astype(np.uint8)
 
             tp = np.sum(detected_pts)
             fp = len(pts) - tp
-            fn = len(gt_inverted_xy) - np.sum(detected_gt)
+            fn = len(gt) - np.sum(detected_gt)
 
         self.tp += tp
-        # print("gt = ", gt_inverted_xy, "\n")
-        # print("pts = ", pts, "\n")
-        # print("tp = ", self.tp, ", r = ", self.r)
-        # print("detected_pts: ", detected_pts)
-        # print(dis)
         self.fp += fp
-        # print("fp = ", self.fp, "r = ", self.r)
         self.fn += fn
-        # print("fn = ", self.fn, "r = ", self.r)
 
         # Evaluation using the Averaged Hausdorff Distance
         ahd = losses.averaged_hausdorff_distance(pts, gt,
