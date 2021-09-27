@@ -451,6 +451,11 @@ while epoch < args.epochs:
                                   f'r{args.radius}-Recall (%)'])
 
     # If this is the best epoch (in terms of validation error)
+    
+    # reset mahd
+    print(mahd)
+    lowest_mahd = 100
+
     if judge.mahd < lowest_mahd:
         # Keep the best model
         lowest_mahd = judge.mahd
