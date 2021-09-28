@@ -453,9 +453,9 @@ while epoch < args.epochs:
     # If this is the best epoch (in terms of validation error)
     
     # reset mahd
-    # print('beginning: ', lowest_mahd)
-    # lowest_mahd = 100
-    # print('ending: ', lowest_mahd)
+    print('beginning: ', lowest_mahd)
+    lowest_mahd = 100
+    print('ending: ', lowest_mahd)
 
     if judge.mahd < lowest_mahd:
         # Keep the best model
